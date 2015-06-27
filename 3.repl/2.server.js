@@ -1,8 +1,6 @@
 var http = require('http');
 //建立服务器
 
-var server = http.createServer(waiter);
-
 function waiter(req,res){
     res.writeHead(200,{'Content-Type':'text/html;charset=utf-8'});
     var url = req.url;
@@ -28,6 +26,8 @@ function waiter(req,res){
 
 
 }
+var server = http.createServer(waiter);
+
 server.listen(8080,'localhost');
 
 /**
