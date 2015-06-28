@@ -16,10 +16,10 @@ util.inherits(Person,EventEmitter);
 
 var me = new Person();
 //
-me.addListener('老板找我',function(){
-    console.log('问问老板有什么事');
+me.addListener('老板找我',function(msg){
+    console.log('问问老板有什么事'+msg);
 });
-me.emit('老板找我');
+me.emit('老板找我','信息的内容');
 me.on('微信有新消息了',function(){
     console.log('看看有谁给我发了新消息');
 });
