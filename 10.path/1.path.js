@@ -1,5 +1,7 @@
 var path = require('path');
 var fs = require('fs');
+var out = fs.createReadStream();
+out.on('data');
 /**
  * normalize 将非标准的路径 转化为标准路径
  * 1.解析  . ..
