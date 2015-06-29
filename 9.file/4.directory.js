@@ -9,14 +9,15 @@ fs.mkdir('./test/test/test',function(err){
         console.log('创建成功');
     }
 });
-var path = './test';
-fs.readdir(path,function(err,files){
+var filename = './test';
+var path = require('path');
+fs.readdir(filename,function(err,files){
     if(err){
         console.log(err);
     }else{
         console.log(files);
         files.forEach(function(file){
-            fs.stat(path+'/'+file,function(err,stat){
+            fs.stat(path.join(filename,file),function(err,stat){
                 //console.log(stat);
                // console.log(stat.isDirectory());
                // console.log(stat.isFile());
