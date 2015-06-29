@@ -31,12 +31,12 @@ function Person(){ //构造函数
         return this.name;
     }
 }
-var p = new Person();
-console.log(p.toString());
+var p = new Person();//创建Person对象
+console.log(p.toString());//输出对象描述
 // legacy: obj, showHidden, depth, colors*/
-console.log(util.inspect(p,false));
+console.log(util.inspect(p,false));//返回一个对象的描述信息
 
 console.log(util.isArray([]));//判断是否一个数组
-console.log(util.isRegExp('dd'));
-console.log(util.isDate(new Date()));
-console.log(util.isError(new Error));
+console.log(util.isRegExp('dd'));//判断是否是一个正则
+console.log(util.isDate(new Date()));//判断是否是一个日期
+console.log(util.isError(new Error));//判断是否是一个错误
