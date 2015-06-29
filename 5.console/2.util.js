@@ -26,8 +26,8 @@ c.showName();//child 调用子类的showName方法，输出子类的名称 因�
 c.say();//hello child 调用子类的say方法，输出子类的名称
 
 function Person(){ //构造函数
-    this.name = 'zfpx'; //私有属性
-    this.toString = function(){
+    this.name = 'zfpx'; //私有属性 name
+    this.toString = function(){//私有属性
         return this.name;
     }
 }
