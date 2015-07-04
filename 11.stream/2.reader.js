@@ -13,8 +13,8 @@ function LineReader(path){
 util.inherits(LineReader,EventEmitter);
 LineReader.prototype.on('newListener',function(eventName,func){
     if(eventName == 'newLine'){
-        var line = [];
-        var self = this;
+        var line = [];//声明临时数组
+        var self = this;//保存this指针
         this._rs.on('readable',function(){
             var ch;
             while(null != (ch = this.read(1))){
@@ -22,6 +22,7 @@ LineReader.prototype.on('newListener',function(eventName,func){
                 if(ch[0] == RETURN){
                     this.read(1); // \n
                     self.emit('newLine',Buffer.concat(line).toString());
+                    line=[];
                 }else{
                     line.push(ch);
                 }
