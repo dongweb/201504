@@ -10,7 +10,7 @@ var BUFFER_SIZE = 3;
  * @param src
  * @param desc
  */
-function copy(src,desc){
+/*function copy(src,desc){
     //读到的位置 来源fd 目标fd 实际读到的字节数
     var readSoFar,fdsrc,fddest,read;
     var buff = new Buffer(BUFFER_SIZE);
@@ -26,6 +26,26 @@ function copy(src,desc){
     }while(read==BUFFER_SIZE)
     fs.closeSync(fdsrc);
     fs.closeSync(fddest);
-}
+}*/
 
-copy('src','dest');
+//copy('src','dest');
+move('src','dest');
+
+function move(src,desc){
+    //读到的位置 来源fd 目标fd 实际读到的字节数
+    var readSoFar,fdsrc,fddest,read;
+    var buff = new Buffer(BUFFER_SIZE);
+    fdsrc = fs.openSync(src,'r');
+    fddest = fs.openSync(desc,'w');
+    readSoFar = 0;
+    var counter = 0;
+    do{
+        read = fs.readSync(fdsrc,buff,0,BUFFER_SIZE,readSoFar);
+        fs.writeSync(fddest,buff,0,read);
+        readSoFar += read;
+        console.log(counter++);
+    }while(read==BUFFER_SIZE)
+    fs.closeSync(fdsrc);
+    fs.closeSync(fddest);
+    fs.unlinkSync(src);
+}

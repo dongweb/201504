@@ -11,6 +11,8 @@ function LineReader(path){
 }
 
 util.inherits(LineReader,EventEmitter);
+//LineReader.prototype
+//this._events = {newListener;[func]};
 LineReader.prototype.on('newListener',function(eventName){
     if(eventName == 'newLine'){
         var line = [];//声明临时数组
@@ -18,6 +20,7 @@ LineReader.prototype.on('newListener',function(eventName){
         this._rs.on('readable',function(){
             var ch;
             while(null != (ch = this.read(1))){
+                console.log(ch);
                 // \r
                 if(ch[0] == RETURN){
                     this.read(1); // \n
@@ -33,4 +36,12 @@ LineReader.prototype.on('newListener',function(eventName){
             self.emit('end');
         });
     }
+});
+
+var lineReader = new LineReader('./msg.txt');
+lineReader.on('newLine',function(line){
+    console.log(line);
+});
+lineReader.on('end',function(){
+    console.log('end');
 });
