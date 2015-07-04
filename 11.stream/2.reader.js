@@ -11,7 +11,7 @@ function LineReader(path){
 }
 
 util.inherits(LineReader,EventEmitter);
-LineReader.prototype.on('newListener',function(eventName,func){
+LineReader.prototype.on('newListener',function(eventName){
     if(eventName == 'newLine'){
         var line = [];//声明临时数组
         var self = this;//保存this指针
