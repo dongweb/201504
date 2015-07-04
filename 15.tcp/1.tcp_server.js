@@ -14,6 +14,15 @@ var fs = require('fs');
 http.createServer();
 var server = net.createServer(function(socket){
     console.log('客户端已经连接');
+    console.log(util.inspect(socket.remoteAddress));
+    server.getConnections(function(err,count){
+        console.log('现在一共有个%d连接了',count);
+    });
+    socket.on('data',function(data){
+        console.log(data);
+        console.log('已接收到的数据量为%d字节',socket.bytesRead);
+        socket.write(data+" too");
+    });
 });
 server.listen(8080,function(){
     console.log('服务器已经启动',util.inspect(server.address()));
