@@ -8,7 +8,8 @@
 
 var dgram = require('dgram');
 var util = require('util');
-var server = dgram.createSocket('udp4',function(msg,rinfo){
+var server = dgram.createSocket('udp4');
+server.on('message',function(msg,rinfo){
     console.log('接收到 ',msg.toString());
     console.log(util.inspect(rinfo));
 });
