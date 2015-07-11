@@ -1,6 +1,7 @@
 var http = require('http');
 var url = require('url');
 var fs = require('fs');
+var agentUtil = require('user-agent-parser');
 /**
  * 从一个网页跳转，或者网页引用一个资源的时候，
  * HTTP请求的会带有refer表示来源网页的URL
@@ -8,6 +9,7 @@ var fs = require('fs');
  */
 var server = http.createServer(function(req,res){
     var urlObj = url.parse(req.url,true);
+    console.dir(agentUtil(req.headers['user-agent']));
     var pathname = urlObj.pathname;
     //Accept-Language:zh-CN,zh;q=0.8
     if(pathname == '/favicon.ico'){
@@ -28,7 +30,7 @@ var server = http.createServer(function(req,res){
         }).sort(function(a,b){
             return b.q - a.q;// [{lan:'zh-cn',q:1},{lan:'zh',q:0.8}]
         });
-        var mylangs = ['zh'];
+        var mylangs = ['en','zh'];
         var defaultLan = null;
         //[{lan:'zh-cn',q:1},{lan:'zh',q:0.8}]
         for(var i=0;i<langs.length;i++){
