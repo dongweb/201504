@@ -2,7 +2,7 @@ var http = require('http');
 var url = require('url');
 var fs = require('fs');
 var httpProxy = require('http-proxy');
-var forward = require('forward');
+var forward = require('forwarded');
 //   a.zfpx.com www.baidu.com
 /**
  * 实现一个端口监听多个域名
@@ -16,7 +16,7 @@ var server = http.createServer(function (req, res) {
     var proxy = httpProxy.createProxyServer();
     proxy.on('proxyReq',function(proxyReq,req,res,options){
         proxyReq.setHeader('Host','www.baidu.com');
-        //proxyReq.setHeader('X-Real-IP',forward(req));
+        proxyReq.setHeader('X-Real-IP',forward(req));
     });
     proxy.on('proxyRes', function (proxyRes, req, res) {
         res.setHeader('X-Proxy-By', 'proxy by');
