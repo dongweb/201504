@@ -14,6 +14,7 @@ var fs = require('fs');
 var out = fs.createWriteStream('./msg.txt');
 http.createServer();
 var server = net.createServer(function(socket){
+    socket.pause();
     console.log('客户端已经连接');
     console.log(util.inspect(socket.remoteAddress));
     server.getConnections(function(err,count){
@@ -21,11 +22,11 @@ var server = net.createServer(function(socket){
     });
     socket.setEncoding('utf8');
 
-    socket.pipe(out);
-    socket.on('data',function(data){
-        console.log(data);
-        console.log('已接收到的数据量为%d字节',socket.bytesRead);
-        socket.write(data+" too\r\n");
+    socket.setTimeout(5*1000);
+    socket.on('timeout',function(){
+        console.log('客户端已超时');
+        socket.resume();
+        socket.pipe(out,{end:false});
     });
     socket.on('close',function(){
         console.log('客户端关闭了');
