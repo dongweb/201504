@@ -8,11 +8,11 @@ var fs = require('fs');
 var server = http.createServer(function(req,res){
  var handler = {
      article:{
-         add:function(req,res,title,content){
-            res.end('add successfully');
+         add:function(req,res,args){
+            res.end('add '+args[0]+' '+args[1]+' successfully');
          },
-         delete:function(req,res,id){
-             res.end('delete successfully');
+         delete:function(req,res,args){
+             res.end('delete '+args[0]+' successfully');
          }
      }
  }
@@ -23,8 +23,9 @@ var server = http.createServer(function(req,res){
   var paths =  pathname.split('/');
   var ctrl = paths[1];
   var action = paths[2];
+  var args = paths.slice(3);
   if(handler[ctrl]&&handler[ctrl][action]){
-      handler[ctrl][action].apply(null,[req,res]);
+      handler[ctrl][action].apply(null,[req,res,args]);
   }else{
       res.writeHead(500);
   }
