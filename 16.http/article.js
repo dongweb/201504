@@ -1,6 +1,6 @@
 exports.add = function(req,res,args){
-    res.end('add article '+args[0]+' '+args[1]+' successfully');
+    res.end('add article '+args.join(' ')+' successfully');
 },
 exports.delete = function(req,res,args){
-    res.end('delete article '+args[0]+' successfully');
+    res.end('delete article '+args.join(' ')+' successfully');
 }
