@@ -9,28 +9,28 @@
 var net = require('net');
 var util = require('util');
 var clients  = {};
-var count = 0;
 var server = net.createServer(function(socket){
-    socket.write('欢迎光临，当前有'+count+'人在聊天,请设置呢称\r\n');
+    socket.write('欢迎光临，当前有'+(Object.keys(clients).length)+'人在聊天,请设置呢称\r\n');
     var nickname;
     socket.setEncoding('utf8');
     socket.on('data',function(chunk){
+        chunk = chunk.replace(/\r\n/,'');
         if(nickname){
             broadcast(nickname+":"+chunk+'\r\n');
         }else{
             if(clients[chunk]){
                 socket.write('你这个呢称被别人用了\r\n');
             }else{
-                chunk = chunk.replace(/\r\n/,'');
                 nickname = chunk;
                 clients[nickname] = socket;
-                count ++;
                 broadcast('SYSTEM:'+nickname+'来到了聊天室');
             }
         }
     });
+    socket.on('error',function(err){
+        console.error('socket ',err);
+    });
     socket.on('close',function(){
-        count --;
         delete clients[nickname];
         socket.destroy();
         broadcast('SYSTEM:'+nickname+'离开了聊天室');
@@ -42,5 +42,7 @@ function broadcast(msg){
         clients[nickname].write(msg);
     }
 }
-
-server.listen(8080,'0.0.0.0');
+server.on('error',function(err){
+    console.error('server',err);
+});
+server.listen(8080);
